@@ -65,8 +65,8 @@ export const work = [
     description:
       'The site you\'re looking at right now — a distinct, case-study-style portfolio with a sticky sidebar layout, built separately from the main resume site to explore a different visual language.',
     tech: ['React.js', 'Tailwind CSS', 'Framer Motion'],
-    liveUrl: '',
-    githubUrl: '',
+    liveUrl: 'https://portfolio.madhuboora.online',
+    githubUrl: 'https://github.com/madhuboora930/portfolio',
     highlights: [
       'Sticky sidebar + scrollable case-study content, distinct from the resume site\'s layout',
       'Single-accent, editorial-style design system',
