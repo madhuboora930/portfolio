@@ -9,12 +9,17 @@ export default function MinimalTemplate({ content, theme }) {
     .filter(Boolean)
     .join("   ·   ")
 
+  const isCompact = theme.density === "compact"
+  const sectionGap = isCompact ? "mb-5" : "mb-8"
+  const itemGap = isCompact ? "gap-3" : "gap-5"
+  const bulletList = isCompact ? "mt-1 space-y-0.5" : "mt-1.5 space-y-1"
+
   return (
     <div
-      className="min-h-[1123px] w-[794px] px-16 py-14"
+      className={isCompact ? "min-h-[1123px] w-[794px] px-14 py-9" : "min-h-[1123px] w-[794px] px-16 py-14"}
       style={{ fontFamily: font.body, color: "#26262b" }}
     >
-      <header className="mb-8 text-center">
+      <header className={isCompact ? "mb-5 text-center" : "mb-8 text-center"}>
         <h1
           className="text-3xl font-semibold tracking-tight"
           style={{ fontFamily: font.heading }}
@@ -25,23 +30,23 @@ export default function MinimalTemplate({ content, theme }) {
         {contactLine && <p className="mt-3 text-xs text-[#6b6b73]">{contactLine}</p>}
       </header>
 
-      <div className="mx-auto mb-8 h-px w-full" style={{ backgroundColor: theme.color }} />
+      <div className={`mx-auto h-px w-full ${sectionGap}`} style={{ backgroundColor: theme.color }} />
 
       {personal.summary && (
-        <section className="mb-8">
+        <section className={sectionGap}>
           <p className="text-center text-sm leading-relaxed text-[#3a3a40]">{personal.summary}</p>
         </section>
       )}
 
       {experience.length > 0 && (
-        <section className="mb-8">
+        <section className={sectionGap}>
           <h2
             className="mb-4 text-center text-xs font-bold uppercase tracking-[0.2em]"
             style={{ color: theme.color, fontFamily: font.heading }}
           >
             Experience
           </h2>
-          <div className="flex flex-col gap-5">
+          <div className={`flex flex-col ${itemGap}`}>
             {experience.map((item) => (
               <div key={item.id}>
                 <div className="flex items-baseline justify-between gap-2">
@@ -54,7 +59,7 @@ export default function MinimalTemplate({ content, theme }) {
                 </div>
                 {item.location && <p className="text-xs text-[#6b6b73]">{item.location}</p>}
                 {item.bullets.filter(Boolean).length > 0 && (
-                  <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
+                  <ul className={`list-disc pl-4 text-sm leading-relaxed text-[#3a3a40] ${bulletList}`}>
                     {item.bullets.filter(Boolean).map((bullet, idx) => (
                       <li key={idx}>{bullet}</li>
                     ))}
@@ -67,14 +72,14 @@ export default function MinimalTemplate({ content, theme }) {
       )}
 
       {projects.length > 0 && (
-        <section className="mb-8">
+        <section className={sectionGap}>
           <h2
             className="mb-4 text-center text-xs font-bold uppercase tracking-[0.2em]"
             style={{ color: theme.color, fontFamily: font.heading }}
           >
             Projects
           </h2>
-          <div className="flex flex-col gap-5">
+          <div className={`flex flex-col ${itemGap}`}>
             {projects.map((item) => (
               <div key={item.id}>
                 <div className="flex items-baseline justify-between gap-2">
@@ -85,7 +90,7 @@ export default function MinimalTemplate({ content, theme }) {
                 </div>
                 {item.tech && <p className="text-xs text-[#6b6b73]">{item.tech}</p>}
                 {item.bullets.filter(Boolean).length > 0 && (
-                  <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
+                  <ul className={`list-disc pl-4 text-sm leading-relaxed text-[#3a3a40] ${bulletList}`}>
                     {item.bullets.filter(Boolean).map((bullet, idx) => (
                       <li key={idx}>{bullet}</li>
                     ))}
@@ -98,14 +103,14 @@ export default function MinimalTemplate({ content, theme }) {
       )}
 
       {education.length > 0 && (
-        <section className="mb-8">
+        <section className={sectionGap}>
           <h2
             className="mb-4 text-center text-xs font-bold uppercase tracking-[0.2em]"
             style={{ color: theme.color, fontFamily: font.heading }}
           >
             Education
           </h2>
-          <div className="flex flex-col gap-3">
+          <div className={`flex flex-col ${isCompact ? "gap-2" : "gap-3"}`}>
             {education.map((item) => (
               <div key={item.id}>
                 <div className="flex items-baseline justify-between gap-2">

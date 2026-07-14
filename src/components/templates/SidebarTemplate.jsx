@@ -4,13 +4,20 @@ import { formatDateRange } from "@/utils/formatDateRange"
 export default function SidebarTemplate({ content, theme }) {
   const font = getFontPairById(theme.fontPairId)
   const { personal, experience, projects, education, skills, languages } = content
+  const isCompact = theme.density === "compact"
+  const sectionGap = isCompact ? "mb-4" : "mb-7"
+  const itemGap = isCompact ? "gap-3" : "gap-5"
+  const bulletList = isCompact ? "mt-1 space-y-0.5" : "mt-1.5 space-y-1"
 
   return (
     <div
       className="flex min-h-[1123px] w-[794px]"
       style={{ fontFamily: font.body, color: "#26262b" }}
     >
-      <aside className="flex w-[260px] shrink-0 flex-col gap-7 px-7 py-10 text-white" style={{ backgroundColor: theme.color }}>
+      <aside
+        className={`flex w-[260px] shrink-0 flex-col text-white ${isCompact ? "gap-4 px-6 py-7" : "gap-7 px-7 py-10"}`}
+        style={{ backgroundColor: theme.color }}
+      >
         <div>
           <h1 className="text-2xl font-bold leading-tight" style={{ fontFamily: font.heading }}>
             {personal.fullName || "Your Name"}
@@ -55,9 +62,9 @@ export default function SidebarTemplate({ content, theme }) {
         )}
       </aside>
 
-      <main className="flex-1 px-9 py-10">
+      <main className={isCompact ? "flex-1 px-7 py-7" : "flex-1 px-9 py-10"}>
         {personal.summary && (
-          <section className="mb-7">
+          <section className={sectionGap}>
             <h2
               className="mb-2 text-sm font-bold uppercase tracking-wider"
               style={{ color: theme.color, fontFamily: font.heading }}
@@ -69,14 +76,14 @@ export default function SidebarTemplate({ content, theme }) {
         )}
 
         {experience.length > 0 && (
-          <section className="mb-7">
+          <section className={sectionGap}>
             <h2
               className="mb-3 text-sm font-bold uppercase tracking-wider"
               style={{ color: theme.color, fontFamily: font.heading }}
             >
               Experience
             </h2>
-            <div className="flex flex-col gap-5">
+            <div className={`flex flex-col ${itemGap}`}>
               {experience.map((item) => (
                 <div key={item.id}>
                   <div className="flex items-baseline justify-between gap-2">
@@ -92,7 +99,7 @@ export default function SidebarTemplate({ content, theme }) {
                     {item.location && ` · ${item.location}`}
                   </p>
                   {item.bullets.filter(Boolean).length > 0 && (
-                    <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
+                    <ul className={`list-disc pl-4 text-sm leading-relaxed text-[#3a3a40] ${bulletList}`}>
                       {item.bullets.filter(Boolean).map((bullet, idx) => (
                         <li key={idx}>{bullet}</li>
                       ))}
@@ -105,14 +112,14 @@ export default function SidebarTemplate({ content, theme }) {
         )}
 
         {projects.length > 0 && (
-          <section className="mb-7">
+          <section className={sectionGap}>
             <h2
               className="mb-3 text-sm font-bold uppercase tracking-wider"
               style={{ color: theme.color, fontFamily: font.heading }}
             >
               Projects
             </h2>
-            <div className="flex flex-col gap-5">
+            <div className={`flex flex-col ${itemGap}`}>
               {projects.map((item) => (
                 <div key={item.id}>
                   <div className="flex items-baseline justify-between gap-2">
@@ -123,7 +130,7 @@ export default function SidebarTemplate({ content, theme }) {
                   </div>
                   {item.tech && <p className="text-xs text-[#6b6b73]">{item.tech}</p>}
                   {item.bullets.filter(Boolean).length > 0 && (
-                    <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
+                    <ul className={`list-disc pl-4 text-sm leading-relaxed text-[#3a3a40] ${bulletList}`}>
                       {item.bullets.filter(Boolean).map((bullet, idx) => (
                         <li key={idx}>{bullet}</li>
                       ))}
@@ -143,7 +150,7 @@ export default function SidebarTemplate({ content, theme }) {
             >
               Education
             </h2>
-            <div className="flex flex-col gap-4">
+            <div className={`flex flex-col ${isCompact ? "gap-2.5" : "gap-4"}`}>
               {education.map((item) => (
                 <div key={item.id}>
                   <div className="flex items-baseline justify-between gap-2">

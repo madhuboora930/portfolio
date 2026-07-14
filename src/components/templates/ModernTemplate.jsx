@@ -4,13 +4,20 @@ import { formatDateRange } from "@/utils/formatDateRange"
 export default function ModernTemplate({ content, theme }) {
   const font = getFontPairById(theme.fontPairId)
   const { personal, experience, projects, education, skills, languages } = content
+  const isCompact = theme.density === "compact"
+  const colGap = isCompact ? "gap-4" : "gap-7"
+  const itemGap = isCompact ? "gap-3" : "gap-5"
+  const bulletList = isCompact ? "mt-1 space-y-0.5" : "mt-1.5 space-y-1"
 
   return (
     <div
       className="min-h-[1123px] w-[794px]"
       style={{ fontFamily: font.body, color: "#26262b" }}
     >
-      <header className="px-12 py-9 text-white" style={{ backgroundColor: theme.color }}>
+      <header
+        className={isCompact ? "px-10 py-6 text-white" : "px-12 py-9 text-white"}
+        style={{ backgroundColor: theme.color }}
+      >
         <h1 className="text-3xl font-bold" style={{ fontFamily: font.heading }}>
           {personal.fullName || "Your Name"}
         </h1>
@@ -23,8 +30,8 @@ export default function ModernTemplate({ content, theme }) {
         </div>
       </header>
 
-      <div className="grid grid-cols-[1fr_260px] gap-8 px-12 py-9">
-        <main className="flex flex-col gap-7">
+      <div className={`grid grid-cols-[1fr_260px] gap-8 ${isCompact ? "px-10 py-6" : "px-12 py-9"}`}>
+        <main className={`flex flex-col ${colGap}`}>
           {personal.summary && (
             <section>
               <h2
@@ -45,7 +52,7 @@ export default function ModernTemplate({ content, theme }) {
               >
                 Experience
               </h2>
-              <div className="flex flex-col gap-5">
+              <div className={`flex flex-col ${itemGap}`}>
                 {experience.map((item) => (
                   <div key={item.id}>
                     <div className="flex items-baseline justify-between gap-2">
@@ -61,7 +68,7 @@ export default function ModernTemplate({ content, theme }) {
                       {item.location && ` · ${item.location}`}
                     </p>
                     {item.bullets.filter(Boolean).length > 0 && (
-                      <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
+                      <ul className={`list-disc pl-4 text-sm leading-relaxed text-[#3a3a40] ${bulletList}`}>
                         {item.bullets.filter(Boolean).map((bullet, idx) => (
                           <li key={idx}>{bullet}</li>
                         ))}
@@ -81,7 +88,7 @@ export default function ModernTemplate({ content, theme }) {
               >
                 Projects
               </h2>
-              <div className="flex flex-col gap-5">
+              <div className={`flex flex-col ${itemGap}`}>
                 {projects.map((item) => (
                   <div key={item.id}>
                     <div className="flex items-baseline justify-between gap-2">
@@ -94,7 +101,7 @@ export default function ModernTemplate({ content, theme }) {
                     </div>
                     {item.tech && <p className="text-xs text-[#6b6b73]">{item.tech}</p>}
                     {item.bullets.filter(Boolean).length > 0 && (
-                      <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
+                      <ul className={`list-disc pl-4 text-sm leading-relaxed text-[#3a3a40] ${bulletList}`}>
                         {item.bullets.filter(Boolean).map((bullet, idx) => (
                           <li key={idx}>{bullet}</li>
                         ))}
@@ -107,7 +114,7 @@ export default function ModernTemplate({ content, theme }) {
           )}
         </main>
 
-        <aside className="flex flex-col gap-7">
+        <aside className={`flex flex-col ${colGap}`}>
           {education.length > 0 && (
             <section>
               <h2

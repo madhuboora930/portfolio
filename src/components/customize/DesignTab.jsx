@@ -1,6 +1,7 @@
 import TemplateSwitcher from "./TemplateSwitcher"
 import ColorPicker from "./ColorPicker"
 import FontPicker from "./FontPicker"
+import DensityPicker from "./DensityPicker"
 
 export default function DesignTab() {
   return (
@@ -22,6 +23,12 @@ export default function DesignTab() {
           Font Pair
         </h3>
         <FontPicker />
+      </div>
+      <div>
+        <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-white/50">
+          Spacing
+        </h3>
+        <DensityPicker />
       </div>
     </div>
   )

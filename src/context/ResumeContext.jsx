@@ -15,6 +15,7 @@ function createDefaultDocument() {
     theme: {
       color: colorPresets[0].value,
       fontPairId: fontPairs[0].id,
+      density: "standard",
     },
   }
 }
@@ -208,6 +209,10 @@ export function ResumeProvider({ children }) {
     setDocument((prev) => ({ ...prev, theme: { ...prev.theme, fontPairId } }))
   }
 
+  const setDensity = (density) => {
+    setDocument((prev) => ({ ...prev, theme: { ...prev.theme, density } }))
+  }
+
   const resetToSample = () => setDocument(createDefaultDocument())
 
   const loadDocument = (loaded) => {
@@ -225,6 +230,7 @@ export function ResumeProvider({ children }) {
       theme: {
         color: loaded?.theme?.color ?? fallback.theme.color,
         fontPairId: loaded?.theme?.fontPairId ?? fallback.theme.fontPairId,
+        density: loaded?.theme?.density ?? fallback.theme.density,
       },
     })
   }
@@ -255,6 +261,7 @@ export function ResumeProvider({ children }) {
     () => ({
       ...document,
       content: { ...document.content, projects: document.content.projects ?? [] },
+      theme: { ...document.theme, density: document.theme.density ?? "standard" },
     }),
     [document],
   )
@@ -279,6 +286,7 @@ export function ResumeProvider({ children }) {
       setTemplateId,
       setAccentColor,
       setFontPairId,
+      setDensity,
       resetToSample,
       clearAll,
       loadDocument,

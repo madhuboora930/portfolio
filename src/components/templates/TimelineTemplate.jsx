@@ -1,9 +1,9 @@
 import { getFontPairById } from "@/data/fontPairs"
 import { formatDateRange } from "@/utils/formatDateRange"
 
-function TimelineItem({ title, subtitle, date, children, color, isLast }) {
+function TimelineItem({ title, subtitle, date, children, color, isLast, compact }) {
   return (
-    <div className="relative flex gap-4 pb-6 pl-1">
+    <div className={`relative flex gap-4 pl-1 ${compact ? "pb-3" : "pb-6"}`}>
       {!isLast && (
         <span
           className="absolute left-[5px] top-3 bottom-0 w-px"
@@ -29,13 +29,19 @@ function TimelineItem({ title, subtitle, date, children, color, isLast }) {
 export default function TimelineTemplate({ content, theme }) {
   const font = getFontPairById(theme.fontPairId)
   const { personal, experience, projects, education, skills, languages } = content
+  const isCompact = theme.density === "compact"
+  const sectionGap = isCompact ? "mb-5" : "mb-8"
+  const bulletList = isCompact ? "mt-1 space-y-0.5" : "mt-1.5 space-y-1"
 
   return (
     <div
-      className="min-h-[1123px] w-[794px] px-12 py-10"
+      className={isCompact ? "min-h-[1123px] w-[794px] px-10 py-7" : "min-h-[1123px] w-[794px] px-12 py-10"}
       style={{ fontFamily: font.body, color: "#26262b" }}
     >
-      <header className="mb-8 border-b pb-6" style={{ borderColor: `${theme.color}33` }}>
+      <header
+        className={isCompact ? "mb-5 border-b pb-4" : "mb-8 border-b pb-6"}
+        style={{ borderColor: `${theme.color}33` }}
+      >
         <h1 className="text-3xl font-bold" style={{ fontFamily: font.heading, color: theme.color }}>
           {personal.fullName || "Your Name"}
         </h1>
@@ -49,13 +55,13 @@ export default function TimelineTemplate({ content, theme }) {
       </header>
 
       {personal.summary && (
-        <section className="mb-8">
+        <section className={sectionGap}>
           <p className="text-sm leading-relaxed text-[#3a3a40]">{personal.summary}</p>
         </section>
       )}
 
       {experience.length > 0 && (
-        <section className="mb-8">
+        <section className={sectionGap}>
           <h2
             className="mb-3 text-sm font-bold uppercase tracking-wider"
             style={{ color: theme.color, fontFamily: font.heading }}
@@ -70,6 +76,7 @@ export default function TimelineTemplate({ content, theme }) {
                 subtitle={[item.company, item.location].filter(Boolean).join(" · ")}
                 date={formatDateRange(item.startDate, item.endDate, item.current)}
                 color={theme.color}
+                compact={isCompact}
                 isLast={
                   index === experience.length - 1 &&
                   projects.length === 0 &&
@@ -77,7 +84,7 @@ export default function TimelineTemplate({ content, theme }) {
                 }
               >
                 {item.bullets.filter(Boolean).length > 0 && (
-                  <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
+                  <ul className={`list-disc pl-4 text-sm leading-relaxed text-[#3a3a40] ${bulletList}`}>
                     {item.bullets.filter(Boolean).map((bullet, idx) => (
                       <li key={idx}>{bullet}</li>
                     ))}
@@ -90,7 +97,7 @@ export default function TimelineTemplate({ content, theme }) {
       )}
 
       {projects.length > 0 && (
-        <section className="mb-8">
+        <section className={sectionGap}>
           <h2
             className="mb-3 text-sm font-bold uppercase tracking-wider"
             style={{ color: theme.color, fontFamily: font.heading }}
@@ -105,10 +112,11 @@ export default function TimelineTemplate({ content, theme }) {
                 subtitle={item.tech}
                 date={item.link}
                 color={theme.color}
+                compact={isCompact}
                 isLast={index === projects.length - 1 && education.length === 0}
               >
                 {item.bullets.filter(Boolean).length > 0 && (
-                  <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
+                  <ul className={`list-disc pl-4 text-sm leading-relaxed text-[#3a3a40] ${bulletList}`}>
                     {item.bullets.filter(Boolean).map((bullet, idx) => (
                       <li key={idx}>{bullet}</li>
                     ))}
@@ -121,7 +129,7 @@ export default function TimelineTemplate({ content, theme }) {
       )}
 
       {education.length > 0 && (
-        <section className="mb-8">
+        <section className={sectionGap}>
           <h2
             className="mb-3 text-sm font-bold uppercase tracking-wider"
             style={{ color: theme.color, fontFamily: font.heading }}
@@ -136,6 +144,7 @@ export default function TimelineTemplate({ content, theme }) {
                 subtitle={[item.school, item.location].filter(Boolean).join(" · ")}
                 date={formatDateRange(item.startDate, item.endDate, false)}
                 color={theme.color}
+                compact={isCompact}
                 isLast={index === education.length - 1}
               >
                 {item.detail && (
