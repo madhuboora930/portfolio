@@ -83,36 +83,40 @@ body {
   border-radius: 4px;
 }
 
+.print-only {
+  display: none;
+}
+
 @media print {
   @page {
     margin: 0;
     size: A4;
   }
 
-  body * {
-    visibility: hidden;
+  html,
+  body {
+    height: auto !important;
+    overflow: visible !important;
   }
 
-  .paper,
-  .paper * {
-    visibility: visible;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  .app-shell {
+    display: none !important;
   }
 
-  .paper {
-    position: absolute;
-    left: 0;
-    top: 0;
+  .print-only {
+    display: block !important;
+  }
+
+  .print-only .paper {
     box-shadow: none !important;
   }
 
-  .print-scale {
-    transform: none !important;
+  .print-only section {
+    break-inside: avoid;
   }
 
-  .print-frame {
-    width: auto !important;
-    height: auto !important;
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }

@@ -1,10 +1,14 @@
 import { ResumeProvider } from "@/context/ResumeContext"
 import EditorLayout from "@/components/layout/EditorLayout"
+import PrintableResume from "@/components/preview/PrintableResume"
 
 function App() {
   return (
     <ResumeProvider>
-      <EditorLayout />
+      <div className="app-shell">
+        <EditorLayout />
+      </div>
+      <PrintableResume />
     </ResumeProvider>
   )
 }

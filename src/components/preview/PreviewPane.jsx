@@ -59,12 +59,8 @@ const PreviewPane = forwardRef(function PreviewPane(_props, ref) {
         ref={containerRef}
         className="scrollbar-none flex-1 overflow-auto px-6 py-10 sm:px-10"
       >
-        <div
-          className="print-frame mx-auto"
-          style={{ width: PAPER_WIDTH * zoom, height: paperHeight * zoom }}
-        >
+        <div className="mx-auto" style={{ width: PAPER_WIDTH * zoom, height: paperHeight * zoom }}>
           <div
-            className="print-scale"
             style={{ transform: `scale(${zoom})`, transformOrigin: "top left", width: PAPER_WIDTH }}
           >
             <div ref={ref} className="paper">
