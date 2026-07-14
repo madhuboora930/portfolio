@@ -73,6 +73,47 @@ export function ResumeProvider({ children }) {
     }))
   }
 
+  const addProject = () => {
+    setDocument((prev) => ({
+      ...prev,
+      content: {
+        ...prev.content,
+        projects: [
+          ...(prev.content.projects ?? []),
+          {
+            id: createId("proj"),
+            name: "",
+            link: "",
+            tech: "",
+            bullets: [""],
+          },
+        ],
+      },
+    }))
+  }
+
+  const updateProject = (id, partial) => {
+    setDocument((prev) => ({
+      ...prev,
+      content: {
+        ...prev.content,
+        projects: (prev.content.projects ?? []).map((item) =>
+          item.id === id ? { ...item, ...partial } : item,
+        ),
+      },
+    }))
+  }
+
+  const removeProject = (id) => {
+    setDocument((prev) => ({
+      ...prev,
+      content: {
+        ...prev.content,
+        projects: (prev.content.projects ?? []).filter((item) => item.id !== id),
+      },
+    }))
+  }
+
   const addEducation = () => {
     setDocument((prev) => ({
       ...prev,
@@ -183,6 +224,7 @@ export function ResumeProvider({ children }) {
           summary: "",
         },
         experience: [],
+        projects: [],
         education: [],
         skills: [],
         languages: [],
@@ -190,13 +232,24 @@ export function ResumeProvider({ children }) {
     }))
   }
 
+  const safeDocument = useMemo(
+    () => ({
+      ...document,
+      content: { ...document.content, projects: document.content.projects ?? [] },
+    }),
+    [document],
+  )
+
   const value = useMemo(
     () => ({
-      document,
+      document: safeDocument,
       updatePersonal,
       addExperience,
       updateExperience,
       removeExperience,
+      addProject,
+      updateProject,
+      removeProject,
       addEducation,
       updateEducation,
       removeEducation,
@@ -210,7 +263,7 @@ export function ResumeProvider({ children }) {
       resetToSample,
       clearAll,
     }),
-    [document],
+    [safeDocument],
   )
 
   return <ResumeContext.Provider value={value}>{children}</ResumeContext.Provider>

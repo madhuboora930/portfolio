@@ -3,7 +3,7 @@ import { formatDateRange } from "@/utils/formatDateRange"
 
 export default function AtsTemplate({ content, theme }) {
   const font = getFontPairById(theme.fontPairId)
-  const { personal, experience, education, skills, languages } = content
+  const { personal, experience, projects, education, skills, languages } = content
 
   const contactLine = [personal.email, personal.phone, personal.location, personal.website]
     .filter(Boolean)
@@ -53,6 +53,34 @@ export default function AtsTemplate({ content, theme }) {
                   {[item.location, formatDateRange(item.startDate, item.endDate, item.current)]
                     .filter(Boolean)
                     .join("  |  ")}
+                </p>
+                {item.bullets.filter(Boolean).length > 0 && (
+                  <ul className="mt-1 list-disc space-y-0.5 pl-4 text-sm leading-relaxed">
+                    {item.bullets.filter(Boolean).map((bullet, idx) => (
+                      <li key={idx}>{bullet}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {projects.length > 0 && (
+        <section className="mb-6">
+          <h2
+            className="mb-2 border-b pb-1 text-xs font-bold uppercase tracking-wider"
+            style={{ borderColor: theme.color, color: theme.color }}
+          >
+            Projects
+          </h2>
+          <div className="flex flex-col gap-4">
+            {projects.map((item) => (
+              <div key={item.id}>
+                <p className="text-sm font-bold">{item.name}</p>
+                <p className="text-xs text-[#4d4d4d]">
+                  {[item.tech, item.link].filter(Boolean).join("  |  ")}
                 </p>
                 {item.bullets.filter(Boolean).length > 0 && (
                   <ul className="mt-1 list-disc space-y-0.5 pl-4 text-sm leading-relaxed">

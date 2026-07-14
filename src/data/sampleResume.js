@@ -13,6 +13,7 @@ export function createEmptyResume() {
       summary: "",
     },
     experience: [],
+    projects: [],
     education: [],
     skills: [],
     languages: [],
@@ -57,6 +58,18 @@ export function createSampleResume() {
         bullets: [
           "Designed onboarding flows that reduced drop-off by 28%",
           "Partnered with engineering to ship a responsive design system in React",
+        ],
+      },
+    ],
+    projects: [
+      {
+        id: nextId("proj"),
+        name: "Palette — Design Token Sync",
+        link: "github.com/alexmorgan/palette",
+        tech: "React, Figma API, Node.js",
+        bullets: [
+          "Built a tool that syncs Figma design tokens to a shared React component library",
+          "Used by 3 teams to keep design and code in sync without manual handoff",
         ],
       },
     ],

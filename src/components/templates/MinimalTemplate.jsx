@@ -3,7 +3,7 @@ import { formatDateRange } from "@/utils/formatDateRange"
 
 export default function MinimalTemplate({ content, theme }) {
   const font = getFontPairById(theme.fontPairId)
-  const { personal, experience, education, skills, languages } = content
+  const { personal, experience, projects, education, skills, languages } = content
 
   const contactLine = [personal.email, personal.phone, personal.location, personal.website]
     .filter(Boolean)
@@ -53,6 +53,37 @@ export default function MinimalTemplate({ content, theme }) {
                   </span>
                 </div>
                 {item.location && <p className="text-xs text-[#6b6b73]">{item.location}</p>}
+                {item.bullets.filter(Boolean).length > 0 && (
+                  <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
+                    {item.bullets.filter(Boolean).map((bullet, idx) => (
+                      <li key={idx}>{bullet}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {projects.length > 0 && (
+        <section className="mb-8">
+          <h2
+            className="mb-4 text-center text-xs font-bold uppercase tracking-[0.2em]"
+            style={{ color: theme.color, fontFamily: font.heading }}
+          >
+            Projects
+          </h2>
+          <div className="flex flex-col gap-5">
+            {projects.map((item) => (
+              <div key={item.id}>
+                <div className="flex items-baseline justify-between gap-2">
+                  <h3 className="text-sm font-semibold" style={{ fontFamily: font.heading }}>
+                    {item.name}
+                  </h3>
+                  {item.link && <span className="shrink-0 text-xs text-[#6b6b73]">{item.link}</span>}
+                </div>
+                {item.tech && <p className="text-xs text-[#6b6b73]">{item.tech}</p>}
                 {item.bullets.filter(Boolean).length > 0 && (
                   <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
                     {item.bullets.filter(Boolean).map((bullet, idx) => (

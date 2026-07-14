@@ -28,7 +28,7 @@ function TimelineItem({ title, subtitle, date, children, color, isLast }) {
 
 export default function TimelineTemplate({ content, theme }) {
   const font = getFontPairById(theme.fontPairId)
-  const { personal, experience, education, skills, languages } = content
+  const { personal, experience, projects, education, skills, languages } = content
 
   return (
     <div
@@ -70,7 +70,42 @@ export default function TimelineTemplate({ content, theme }) {
                 subtitle={[item.company, item.location].filter(Boolean).join(" · ")}
                 date={formatDateRange(item.startDate, item.endDate, item.current)}
                 color={theme.color}
-                isLast={index === experience.length - 1 && education.length === 0}
+                isLast={
+                  index === experience.length - 1 &&
+                  projects.length === 0 &&
+                  education.length === 0
+                }
+              >
+                {item.bullets.filter(Boolean).length > 0 && (
+                  <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
+                    {item.bullets.filter(Boolean).map((bullet, idx) => (
+                      <li key={idx}>{bullet}</li>
+                    ))}
+                  </ul>
+                )}
+              </TimelineItem>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {projects.length > 0 && (
+        <section className="mb-8">
+          <h2
+            className="mb-3 text-sm font-bold uppercase tracking-wider"
+            style={{ color: theme.color, fontFamily: font.heading }}
+          >
+            Projects
+          </h2>
+          <div>
+            {projects.map((item, index) => (
+              <TimelineItem
+                key={item.id}
+                title={item.name}
+                subtitle={item.tech}
+                date={item.link}
+                color={theme.color}
+                isLast={index === projects.length - 1 && education.length === 0}
               >
                 {item.bullets.filter(Boolean).length > 0 && (
                   <ul className="mt-1.5 list-disc space-y-1 pl-4 text-sm leading-relaxed text-[#3a3a40]">
