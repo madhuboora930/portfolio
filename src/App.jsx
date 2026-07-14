@@ -1,19 +1,12 @@
-import Sidebar from './components/layout/Sidebar'
-import Footer from './components/layout/Footer'
-import About from './components/sections/About'
-import Work from './components/sections/Work'
-import Contact from './components/sections/Contact'
+import { ResumeProvider } from "@/context/ResumeContext"
+import EditorLayout from "@/components/layout/EditorLayout"
 
-export default function App() {
+function App() {
   return (
-    <div className="lg:flex">
-      <Sidebar />
-      <main className="px-6 sm:px-10 lg:ml-[40%] lg:flex-1 lg:px-16 xl:ml-[33.333%]">
-        <About />
-        <Work />
-        <Contact />
-        <Footer />
-      </main>
-    </div>
+    <ResumeProvider>
+      <EditorLayout />
+    </ResumeProvider>
   )
 }
+
+export default App
