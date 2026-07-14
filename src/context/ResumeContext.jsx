@@ -210,6 +210,25 @@ export function ResumeProvider({ children }) {
 
   const resetToSample = () => setDocument(createDefaultDocument())
 
+  const loadDocument = (loaded) => {
+    const fallback = createDefaultDocument()
+    setDocument({
+      content: {
+        personal: { ...fallback.content.personal, ...loaded?.content?.personal },
+        experience: Array.isArray(loaded?.content?.experience) ? loaded.content.experience : [],
+        projects: Array.isArray(loaded?.content?.projects) ? loaded.content.projects : [],
+        education: Array.isArray(loaded?.content?.education) ? loaded.content.education : [],
+        skills: Array.isArray(loaded?.content?.skills) ? loaded.content.skills : [],
+        languages: Array.isArray(loaded?.content?.languages) ? loaded.content.languages : [],
+      },
+      templateId: typeof loaded?.templateId === "string" ? loaded.templateId : fallback.templateId,
+      theme: {
+        color: loaded?.theme?.color ?? fallback.theme.color,
+        fontPairId: loaded?.theme?.fontPairId ?? fallback.theme.fontPairId,
+      },
+    })
+  }
+
   const clearAll = () => {
     setDocument((prev) => ({
       ...prev,
@@ -262,6 +281,7 @@ export function ResumeProvider({ children }) {
       setFontPairId,
       resetToSample,
       clearAll,
+      loadDocument,
     }),
     [safeDocument],
   )
